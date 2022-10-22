@@ -34,18 +34,19 @@ app.post('/ussd', (req, res) => {
 
   if (text == '') {
       // This is the first request. Note how we start the response with CON
-      response = `Habari, Karibu.
+      response = `CON Habari, Karibu.
       Je, ungependa kupata huduma gani?
       1. Huduma za kilimo
       2. Huduma za ufugaji`;
   } else if ( text == '1') {
       // Business logic for first level response
-      response = `CON Choose account information you want to view
-      1. Account number`;
+      response = `CON Huduma ipi ya kilimo unapenda kuipata?
+      1. Mazao yafaayo kulimwa mwezi huu
+      2. Magonjwa yawezayo tokea mwezi huu`;
   } else if ( text == '2') {
       // Business logic for first level response
       // This is a terminal request. Note how we start the response with END
-      response = `END Your phone number is ${phoneNumber}`;
+      response = `CON Your phone number is ${phoneNumber}`;
   } else if ( text == '1*1') {
       // This is a second level response where the user selected 1 in the first instance
       const accountNumber = 'ACC100101';
