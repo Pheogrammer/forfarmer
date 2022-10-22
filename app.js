@@ -121,23 +121,23 @@ Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
     // Get the SMS service
     const sms = AfricasTalking.SMS;
 
-    function sendMessage() {
-      const options = {
-        // Set the numbers you want to send to in international format
-        to: [phoneNumber],
-        // Set your message
-        message: "Asante kwa kujiunga na huduma hii, utapata taarifa za kilimo na ufugaji kila wiki. Utakatwa shilingi 1 kwa kila ujumbe ",
-        // Set your shortCode or senderId
-        from: 'ForFarmer'
-      }
 
-      // That’s it, hit send and we’ll take care of the rest
-      sms.send(options)
-        .then(console.log)
-        .catch(console.log);
+    const options = {
+      // Set the numbers you want to send to in international format
+      to: [phoneNumber],
+      // Set your message
+      message: "Asante kwa kujiunga na huduma hii, utapata taarifa za kilimo na ufugaji kila wiki. Utakatwa shilingi 1 kwa kila ujumbe ",
+      // Set your shortCode or senderId
+      from: 'ForFarmer'
     }
 
-    sendMessage();
+    // That’s it, hit send and we’ll take care of the rest
+    sms.send(options)
+      .then(console.log)
+      .catch(console.log);
+
+
+
 
 
 
