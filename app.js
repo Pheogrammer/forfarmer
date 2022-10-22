@@ -107,7 +107,41 @@ Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
   } else if (text == '2*1') {
     response = `CON Je, upo katika kanda ipi?
       1. Mashariki`;
-  }else if (text == '2*1*1') {
+
+  } else if (text == '1*3' | text == '2*2') {
+    // Set your app credentials
+    const credentials = {
+      apiKey: 'MyAppAP724991ad766ba9a51cc99afd9cb6ab7980d8bef20fcc8366880f08f46c3bc391Ikey',
+      username: 'ForFarmer',
+    }
+
+    // Initialize the SDK
+    const AfricasTalking = require('africastalking')(credentials);
+
+    // Get the SMS service
+    const sms = AfricasTalking.SMS;
+
+    function sendMessage() {
+      const options = {
+        // Set the numbers you want to send to in international format
+        to: [phoneNumber],
+        // Set your message
+        message: "Asante kwa kujiunga na huduma hii, utapata taarifa za kilimo na ufugaji kila wiki. Utakatwa shilingi 1 kwa kila ujumbe ",
+        // Set your shortCode or senderId
+        from: 'ForFarmer'
+      }
+
+      // That’s it, hit send and we’ll take care of the rest
+      sms.send(options)
+        .then(console.log)
+        .catch(console.log);
+    }
+
+    sendMessage();
+
+
+
+  } else if (text == '2*1*1') {
     response = `END Magonjwa yanayoweza kutokea mwezi huu wa ${name}:
       a) Mdondo
       b) Kideri
