@@ -34,9 +34,10 @@ app.post('/ussd', (req, res) => {
 
   if (text == '') {
       // This is the first request. Note how we start the response with CON
-      response = `CON What would you like to check
-      1. My account
-      2. My phone number`;
+      response = `Habari, Karibu.
+      Je, ungependa kupata huduma gani?
+      1. Huduma za kilimo
+      2. Huduma za ufugaji`;
   } else if ( text == '1') {
       // Business logic for first level response
       response = `CON Choose account information you want to view
