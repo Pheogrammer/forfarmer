@@ -47,7 +47,8 @@ app.post('/ussd', (req, res) => {
     // Business logic for first level response
     response = `CON Huduma ipi ya kilimo unapenda kuipata?
       1. Mazao yafaayo kulimwa mwezi huu
-      2. Magonjwa yawezayo tokea mwezi huu`;
+      2. Magonjwa yawezayo tokea mwezi huu
+      3. Kujiunga na huduma ya ujumbe mfupi`;
   }
   else if (text == '1*1') {
     response = `CON Je, upo katika kanda ipi?
@@ -55,22 +56,65 @@ app.post('/ussd', (req, res) => {
       2. Kaskazini
       3. Magharibi
       4. Kusini`;
+  }
+  else if (text == '1*2') {
+    response = `CON Je, upo katika kanda ipi?
+      1. Mashariki`;
   } else if (text == '1*1*1') {
-response = `END Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
 a) Nyanya
 b) Mahindi
 c) Mihogo
 d) Maembe
 `;
+  } else if (text == '1*2*1') {
+    response = `END kutokana na hali ya hewa, Magonjwa yawezayo tokea mwezi huu wa ${name}:
+a) Ukungu
+b) Viwavi
+c) Minyoo
+
+Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
+`;
+  } else if (text == '1*1*2') {
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    a) Ndizi
+    b) Mahindi
+    c) Maharage
+    d) Karoti
+    e) vitunguu
+    `;
+  }
+  else if (text == '1*1*3') {
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    a) Ndizi
+    b) Mahindi
+    c) Maharage
+    d) Karoti
+    e) vitunguu
+    `;
+  } else if (text == '1*1*4') {
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    a) Alizeti
+    b) Viazi
+    c) Maharage
+    d) Mahindi
+    e) Mchele
+    `;
   } else if (text == '2') {
-    // Business logic for first level response
-    // This is a terminal request. Note how we start the response with END
-    response = `CON Your phone number is ${phoneNumber}`;
-  } else if (text == '1*1') {
-    // This is a second level response where the user selected 1 in the first instance
-    const accountNumber = 'ACC100101';
-    // This is a terminal request. Note how we start the response with END
-    response = `END Your account number is ${accountNumber}`;
+    response = `CON Huduma ipi ya ufugaji unapenda kuipata?
+      1. Magonjwa yawezayo tokea mwezi huu
+      2. Kujiunga na huduma ya ujumbe mfupi`;
+  } else if (text == '2*1') {
+    response = `CON Je, upo katika kanda ipi?
+      1. Mashariki`;
+  }else if (text == '2*1*1') {
+    response = `END Magonjwa yanayoweza kutokea mwezi huu wa ${name}:
+      a) Mdondo
+      b) Kideri
+      c) Minyoo
+      d) Mafua
+      
+      Hakikisha unawasiliana na daktari wa karibu haraka`;
   }
 
   // Send the response back to the API
