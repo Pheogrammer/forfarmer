@@ -24,34 +24,53 @@ app.use('/users', usersRouter);
 app.post('/ussd', (req, res) => {
   // Read the variables sent via POST from our API
   const {
-      sessionId,
-      serviceCode,
-      phoneNumber,
-      text,
+    sessionId,
+    serviceCode,
+    phoneNumber,
+    text,
   } = req.body;
+
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  const d = new Date();
+  let name = month[d.getMonth()];
 
   let response = '';
 
   if (text == '') {
-      // This is the first request. Note how we start the response with CON
-      response = `CON Habari, Karibu.
+    // This is the first request. Note how we start the response with CON
+    response = `CON Habari, Karibu.
       Je, ungependa kupata huduma gani?
       1. Huduma za kilimo
       2. Huduma za ufugaji`;
-  } else if ( text == '1') {
-      // Business logic for first level response
-      response = `CON Huduma ipi ya kilimo unapenda kuipata?
+  } else if (text == '1') {
+    // Business logic for first level response
+    response = `CON Huduma ipi ya kilimo unapenda kuipata?
       1. Mazao yafaayo kulimwa mwezi huu
       2. Magonjwa yawezayo tokea mwezi huu`;
-  } else if ( text == '2') {
-      // Business logic for first level response
-      // This is a terminal request. Note how we start the response with END
-      response = `CON Your phone number is ${phoneNumber}`;
-  } else if ( text == '1*1') {
-      // This is a second level response where the user selected 1 in the first instance
-      const accountNumber = 'ACC100101';
-      // This is a terminal request. Note how we start the response with END
-      response = `END Your account number is ${accountNumber}`;
+  }
+  else if (text == '1*1') {
+    response = `CON Je, upo katika kanda ipi?
+      1. Mashariki
+      2. Kaskazini
+      3. Magharibi
+      4. Kusini`;
+  } else if (text == '1*1*1') {
+response = `END Mazao yafaayo kulimwa mwezi huu wa ${name}:
+a) Nyanya
+b) Mahindi
+c) Mihogo
+d) Maembe
+`;
+  } else if (text == '2') {
+    // Business logic for first level response
+    // This is a terminal request. Note how we start the response with END
+    response = `CON Your phone number is ${phoneNumber}`;
+  } else if (text == '1*1') {
+    // This is a second level response where the user selected 1 in the first instance
+    const accountNumber = 'ACC100101';
+    // This is a terminal request. Note how we start the response with END
+    response = `END Your account number is ${accountNumber}`;
   }
 
   // Send the response back to the API
@@ -59,12 +78,12 @@ app.post('/ussd', (req, res) => {
   res.send(response);
 });
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
