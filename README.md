@@ -39,7 +39,7 @@ React: The front-end of the application is built using React, a popular JavaScri
 
 Node.js: The back-end of the application is built using Node.js, a server-side JavaScript environment.
 
-MongoDB: The ForFarmer Application uses MongoDB, a popular NoSQL database, to store user data and other application data.
+MongoDB: (To be implemented) The ForFarmer Application uses MongoDB, a popular NoSQL database, to store user data and other application data.
 
 ## Contributing
 Contributions to the ForFarmer Application are welcome and encouraged! If you would like to contribute, please fork the repository and submit a pull request.
