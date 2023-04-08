@@ -18,18 +18,18 @@ SMS and USSD Integration: The ForFarmer Application allows farmers to send SMS a
 User-friendly Interface: The ForFarmer Application is designed to be user-friendly and easy to navigate. Farmers can quickly and easily access the information they need, and customize the application to their specific needs.
 
 #Getting Started
-To use the ForFarmer Application, farmers must first create an account and provide basic information about their farm and location. Once their account is set up, farmers can access the application and start exploring the various features and tools.
+(To be done)To use the ForFarmer Application, farmers must first create an account and provide basic information about their farm and location. Once their account is set up, farmers can access the application and start exploring the various features and tools.
 
 ## API Integration
 The ForFarmer Application integrates with a variety of APIs to gather data about crop prices and weather patterns. These APIs include:
 
-OpenWeatherMap API: This API provides real-time weather data and forecasts based on a user's location.
+(not working yet)OpenWeatherMap API: This API provides real-time weather data and forecasts based on a user's location.
 
-Agro API: This API provides crop prices and other agricultural data based on a user's location.
+(still updating)Agro API: This API provides crop prices and other agricultural data based on a user's location.
 
-Google Maps API: This API provides location data to help farmers identify their exact location and access relevant data for their region.
+(finiding alernative)Google Maps API: This API provides location data to help farmers identify their exact location and access relevant data for their region.
 
-Twilio API: This API provides the SMS and USSD integration that allows farmers to access information via SMS and USSD.
+(Am using AfricasTalking)Twilio API: This API provides the SMS and USSD integration that allows farmers to access information via SMS and USSD.
 
 
 ## Technologies Used
