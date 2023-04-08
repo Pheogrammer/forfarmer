@@ -1,28 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const twilio = require('twilio');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+require('dotenv').config();
 
-var app = express();
+const app = express();
 
-// view engine setup
+// set up view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// add middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// set up routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// handle USSD requests
 app.post('/ussd', (req, res) => {
-  // Read the variables sent via POST from our API
+  // extract variables from request body
   const {
     sessionId,
     serviceCode,
@@ -30,53 +35,53 @@ app.post('/ussd', (req, res) => {
     text,
   } = req.body;
 
+  // get the name of the current month
   const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const currentMonth = month[new Date().getMonth()];
 
-  const d = new Date();
-  let name = month[d.getMonth()];
-
+  // initialize response variable
   let response = '';
 
-  if (text == '') {
-    // This is the first request. Note how we start the response with CON
+  if (text === '') {
+    // this is the first request
     response = `CON Habari, Karibu.
       Je, ungependa kupata huduma gani?
       1. Huduma za kilimo
       2. Huduma za ufugaji`;
-  } else if (text == '1') {
-    // Business logic for first level response
+  } else if (text === '1') {
+    // handle first level response for farming services
     response = `CON Huduma ipi ya kilimo unapenda kuipata?
       1. Mazao yafaayo kulimwa mwezi huu
       2. Magonjwa yawezayo tokea mwezi huu
       3. Kujiunga na huduma ya ujumbe mfupi`;
-  }
-  else if (text == '1*1') {
+  } else if (text === '1*1') {
+    // handle second level response for farming services
     response = `CON Je, upo katika kanda ipi?
       1. Mashariki
       2. Kaskazini
       3. Magharibi
       4. Kusini`;
-  }
-  else if (text == '1*2') {
+  } else if (text === '1*2') {
+    // handle second level response for farming services
     response = `CON Je, upo katika kanda ipi?
       1. Mashariki`;
-  } else if (text == '1*1*1') {
-    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
-a) Nyanya
-b) Mahindi
-c) Mihogo
-d) Maembe
-`;
-  } else if (text == '1*2*1') {
-    response = `END kutokana na hali ya hewa, Magonjwa yawezayo tokea mwezi huu wa ${name}:
-a) Ukungu
-b) Viwavi
-c) Minyoo
+  } else if (text === '1*1*1') {
+    // handle third level response for farming services
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${currentMonth}:
+      a) Nyanya
+      b) Mahindi
+      c) Mihogo
+      d) Maembe`;
+  } else if (text === '1*2*1') {
+    // handle third level response for farming services
+    response = `END kutokana na hali ya hewa, Magonjwa yawezayo tokea mwezi huu wa ${currentMonth}:
+      a) Ukungu
+      b) Viwavi
+      c) Minyoo
 
-Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
-`;
+      Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako`;
   } else if (text == '1*1*2') {
-    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${currentMonth}:
     a) Ndizi
     b) Mahindi
     c) Maharage
@@ -85,7 +90,7 @@ Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
     `;
   }
   else if (text == '1*1*3') {
-    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${currentMonth}:
     a) Ndizi
     b) Mahindi
     c) Maharage
@@ -93,7 +98,7 @@ Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
     e) vitunguu
     `;
   } else if (text == '1*1*4') {
-    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${name}:
+    response = `END kutokana na hali ya hewa, Mazao yafaayo kulimwa mwezi huu wa ${currentMonth}:
     a) Alizeti
     b) Viazi
     c) Maharage
@@ -111,9 +116,9 @@ Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
   } else if (text == '1*3' | text == '2*2') {
     // Set your app credentials
     const credentials = {
-      apiKey: 'MyAppAP724991ad766ba9a51cc99afd9cb6ab7980d8bef20fcc8366880f08f46c3bc391Ikey',
-      username: 'ForFarmer',
-    }
+      apiKey: process.env.App_APIKEY,
+      username: process.env.USERNAME || 'ForFarmer',
+    };
 
     // Initialize the SDK
     const AfricasTalking = require('africastalking')(credentials);
@@ -136,13 +141,8 @@ Jiandae kutafuta dawa kutoka kwa wauzaji walio karibu yako
       .then(console.log)
       .catch(console.log);
 
-
-
-
-
-
   } else if (text == '2*1*1') {
-    response = `END Magonjwa yanayoweza kutokea mwezi huu wa ${name}:
+    response = `END Magonjwa yanayoweza kutokea mwezi huu wa ${currentMonth}:
       a) Mdondo
       b) Kideri
       c) Minyoo
